@@ -1,29 +1,36 @@
+---
+project: 
+  title: "Daily_9_10"
+  output-dir: docs
+  
+format: 
+  html: 
+    self-contained: true
+---
+```{r}
 #Assignment: Using the air quality from R datasets
-library(dplyr)
 
 ##Question 1:
-airquality |>
-  help(airquality) 
+ airquality
 
 ##Question 2:
-install.packages("visdat")
+library(dplyr)
 library(visdat)
 vis_dat(airquality)
 airquality_cleaned <- na.omit(airquality)  
 
 ##Question 3: Solar radiation has a natural relationship with ozone levels 
 model <- lm(Ozone ~ Solar.R, data = airquality_cleaned)
-
+ 
 ##Question 4: The model is valid shows the proportion between ozone and solar radiation
 summary(model)
 
 ##Question 5: There is approx. 11.3% of the variation in ozone levels can be explained by solar radiation
 
 ##Question 6: 
-install.packages("broom")
 library(broom)
 a <- augment(model, newdata = airquality_cleaned)
-head(a) 
+head(a)
 
 ##Question 7:
 library(ggplot2)
@@ -35,8 +42,7 @@ ggplot(a, aes(x = Ozone, y = .fitted))+
     title = "Actual vs Predicted Ozone Levels",
     x = "Actual Ozone",
     y = "Predicted Ozone",
-    subtitle = paste("Correlation:", round(cor(airquality_cleaned$Ozone, prediction$.fitted), 2))
-                     
-  ) +
+    subtitle = paste("Correlation:", round(cor(airquality_cleaned$Ozone, a$.fitted),2))
+  )+  
   theme_dark()
-
+```
